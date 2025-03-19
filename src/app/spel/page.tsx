@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Game } from '@/lib/data/games-data';
 import GameCard from '@/components/slots/GameCard';
@@ -11,7 +11,30 @@ import { Search, Filter, X } from 'lucide-react';
 // Antal spel som ska visas per sida
 const ITEMS_PER_PAGE = 20;
 
+// Huvudkomponenten - wrapper utan useSearchParams
 export default function GamesPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <GamesContent />
+    </Suspense>
+  );
+}
+
+// Laddningskomponent
+function Loading() {
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Spelautomater</h1>
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="w-16 h-16 border-t-4 border-pink-600 border-solid rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-600">Laddar spel...</p>
+      </div>
+    </div>
+  );
+}
+
+// Innehållskomponenten - använder useSearchParams
+function GamesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -268,16 +291,14 @@ export default function GamesPage() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {visibleGames.map((game) => (
-              <GameCard 
-                key={game.id} 
-                game={game} 
-                onClick={() => handlePlayDemo(game)}
-                onPlayDemo={handlePlayDemo}
+              <GameCard
+                key={game.id}
+                game={game}
+                onPlayDemo={() => handlePlayDemo(game)}
               />
             ))}
           </div>
           
-          {/* Visa mer-knapp */}
           {hasMore && (
             <div className="mt-8 text-center">
               <button
@@ -288,20 +309,17 @@ export default function GamesPage() {
               </button>
             </div>
           )}
-          
-          {/* Information om bildkälla */}
-          <div className="mt-12 text-center text-gray-500 text-sm">
-            <p>Spelbilder tillhandahålls via FirstLookGames.</p>
-          </div>
         </>
       )}
       
-      {/* Modal för speldemo */}
-      <GameModal
-        game={selectedGame}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
+      {/* Spelmodal */}
+      {isModalOpen && selectedGame && (
+        <GameModal
+          game={selectedGame}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
-} 
+}
