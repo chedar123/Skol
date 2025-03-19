@@ -1,0 +1,24 @@
+{
+  "starzino": [
+    {
+      "id": "comment_1742237539583_w1gbifi",
+      "userId": "casper.hedar@gmail.com",
+      "userName": "Baljeet",
+      "userImage": "/uploads/4fd6dc60-debb-42a7-a9b3-a1d4c2780881.gif",
+      "comment": "test",
+      "createdAt": "2025-03-17T18:52:19.583Z",
+      "casinoName": "STARZINO"
+    }
+  ],
+  "hugocasino": [
+    {
+      "id": "comment_1742051955992_soy2ekq",
+      "userId": "casper.hedar@gmail.com",
+      "userName": "Baljeet",
+      "userImage": "/uploads/4fd6dc60-debb-42a7-a9b3-a1d4c2780881.gif",
+      "comment": "testing",
+      "createdAt": "2025-03-15T15:19:15.992Z",
+      "casinoName": "HUGO CASINO"
+    }
+  ]
+}

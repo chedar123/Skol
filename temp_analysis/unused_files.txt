@@ -1,0 +1,7 @@
+./src/middleware.ts
+./src/app/ClientBody.tsx
+./src/app/slots/metadata.ts
+./src/components/SectionHeader.tsx
+./src/components/CasinoFilter.tsx
+./src/components/HeroBanner.tsx
+./src/lib/cloudinary/index.ts

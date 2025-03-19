@@ -1,0 +1,6 @@
+# Tillåt alla sökmotorer att indexera hela webbplatsen
+User-agent: *
+Allow: /
+
+# Sitemap-fil
+Sitemap: https://slotskolan.se/sitemap.xml 

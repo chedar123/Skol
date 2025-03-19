@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    
+    /* Rosa primärfärg för header och footer */
+    --primary: 330 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Ljusare rosa accent */
+    --accent: 340 85% 65%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Ljusrosa bakgrund för vissa sektioner */
+    --light-pink: 340 85% 96%;
+    
+    /* Mjuk rosa för kontaktsektionen */
+    --soft-pink: 340 85% 92%;
+    --soft-pink-darker: 330 80% 65%;
+    
+    /* Mörkare rosa för detaljer */
+    --dark-pink: 330 70% 40%;
+    
+    /* Neutrala färger */
+    --neutral-light: 340 10% 95%;
+    --neutral-mid: 340 10% 85%;
+    --neutral-dark: 340 15% 30%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --secondary: 330 70% 45%;
+    --secondary-foreground: 0 0% 100%;
+    
+    --muted: 340 20% 96%;
+    --muted-foreground: 340 15% 50%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 340 20% 90%;
+    --input: 340 20% 90%;
+    --ring: 330 70% 45%;
+    
+    --radius: 0.5rem;
+    --navy-blue: 215 100% 20%;
+    --blue-accent: 215 100% 30%;
+    --casino-purple: 318 55% 49%;  /* #c6337d purple */
+    --casino-green: 89 62% 34%;    /* #29d035 green */
+    --casino-orange: 28 100% 50%;  /* #e3970c orange */
+    --casino-gray: 200 3% 62%;     /* #989f9f gray */
+    --casino-light-gray: 200 10% 82%; /* #cad1d2 light gray */
+    --casino-cream: 47 80% 78%;    /* #f6df96 cream */
+    --casino-pink: 359 43% 74%;    /* #d4a4a5 pink */
+  }
+
+  .dark {
+    --background: 340 30% 10%;
+    --foreground: 210 40% 98%;
+    --card: 340 30% 10%;
+    --card-foreground: 210 40% 98%;
+    --popover: 340 30% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 330 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 330 70% 45%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 340 30% 20%;
+    --muted-foreground: 340 20% 70%;
+    --accent: 340 85% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 340 30% 20%;
+    --input: 340 30% 20%;
+    --ring: 340 85% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-800;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+}
+
+@layer components {
+  .pink-button {
+    @apply bg-[hsl(var(--primary))] text-white font-semibold py-3 px-8 rounded-full 
+           hover:bg-[hsl(var(--primary))] hover:opacity-90 transition-all 
+           shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:ring-opacity-50;
+  }
+  
+  .contact-section {
+    @apply bg-[hsl(var(--soft-pink))] py-20 relative overflow-hidden;
+  }
+  
+  .contact-card {
+    @apply bg-white rounded-2xl shadow-md p-8 max-w-2xl mx-auto relative z-10;
+  }
+  
+  .contact-title {
+    @apply text-center text-3xl font-bold mb-10 text-[hsl(var(--soft-pink-darker))];
+  }
+  
+  .contact-title::after {
+    content: "";
+    @apply block w-24 h-1 bg-[hsl(var(--soft-pink-darker))] mx-auto mt-3;
+  }
+  
+  .contact-button {
+    @apply text-[hsl(var(--soft-pink-darker))] font-medium hover:underline;
+  }
+  
+  .contact-link-card {
+    @apply flex flex-col items-center bg-white rounded-full py-3 px-6 shadow-sm hover:shadow-md transition-all
+           border border-gray-100 min-w-[120px] md:min-w-[150px];
+  }
+  
+  .contact-link-card:hover {
+    @apply transform -translate-y-1;
+  }
+  
+  .casino-btn {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .casino-btn-primary {
+    @apply casino-btn bg-[hsl(var(--primary))] text-white hover:bg-[hsl(var(--primary))] hover:opacity-90;
+  }
+
+  .casino-btn-secondary {
+    @apply casino-btn bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))] hover:opacity-90;
+  }
+
+  .casino-btn-accent {
+    @apply casino-btn bg-[hsl(var(--accent))] text-white hover:bg-[hsl(var(--accent))] hover:opacity-90;
+  }
+
+  .casino-tag {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .casino-tag-primary {
+    @apply casino-tag bg-[hsl(var(--primary))] text-white border-transparent;
+  }
+
+  .casino-tag-secondary {
+    @apply casino-tag bg-[hsl(var(--secondary))] text-white border-transparent;
+  }
+
+  .casino-tag-accent {
+    @apply casino-tag bg-[hsl(var(--accent))] text-white border-transparent;
+  }
+
+  .container-casino {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  
+  .social-icon {
+    @apply w-14 h-14 md:w-16 md:h-16 object-contain transition-transform hover:scale-105;
+  }
+  
+  .stream-schedule {
+    @apply bg-white rounded-2xl shadow-md p-6 max-w-2xl mx-auto text-center;
+  }
+  
+  .stream-title {
+    @apply text-lg font-medium text-gray-700 mb-4;
+  }
+}
+
+/* Modal styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg shadow-lg max-w-5xl w-[95%] mx-auto max-h-[95vh] overflow-hidden flex flex-col;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modal-iframe-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.modal-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Responsiv iframe för speldemor */
+.flgIframeContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Aspect ratio: 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.flgIframeContainer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: url("https://client.firstlookgames.com/img/FlatPreloaders/128x128/Preloader_3.gif") no-repeat center center;
+  background-size: 128px 128px;
+}
+
+/* Animationer för modals */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+@layer utilities {
+  .text-2xs {
+    font-size: 0.65rem;
+    line-height: 0.9rem;
+  }
+}

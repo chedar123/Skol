@@ -1,0 +1,64 @@
+{
+  "mental": [
+    {
+      "id": "rating_1742050430421_00rjioy",
+      "userId": "casper.hedar@gmail.com",
+      "rating": 5,
+      "createdAt": "2025-03-15T14:53:50.422Z",
+      "updatedAt": "2025-03-15T14:54:06.150Z"
+    }
+  ],
+  "san-quentin": [
+    {
+      "id": "rating_1742050459897_4gwbwev",
+      "userId": "casper.hedar@gmail.com",
+      "rating": 4,
+      "createdAt": "2025-03-15T14:54:19.904Z",
+      "updatedAt": "2025-03-15T14:54:19.904Z"
+    }
+  ],
+  "starzino": {
+    "ratings": [
+      {
+        "userName": "Baljeet",
+        "rating": 5,
+        "createdAt": "2025-03-17T08:52:32.450Z"
+      }
+    ],
+    "averageRating": 5,
+    "totalRatings": 1
+  },
+  "ggbet": {
+    "ratings": [
+      {
+        "userName": "Baljeet",
+        "rating": 5,
+        "createdAt": "2025-03-17T13:45:57.461Z"
+      }
+    ],
+    "averageRating": 5,
+    "totalRatings": 1
+  },
+  "instantcasino": {
+    "ratings": [
+      {
+        "userName": "Baljeet",
+        "rating": 5,
+        "createdAt": "2025-03-17T13:46:12.703Z"
+      }
+    ],
+    "averageRating": 5,
+    "totalRatings": 1
+  },
+  "hugocasino": {
+    "ratings": [
+      {
+        "userName": "Baljeet",
+        "rating": 5,
+        "createdAt": "2025-03-17T13:46:23.404Z"
+      }
+    ],
+    "averageRating": 5,
+    "totalRatings": 1
+  }
+}

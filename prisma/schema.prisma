@@ -1,0 +1,215 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// För lokal utveckling - SQLite
+//datasource db {
+//  provider = "sqlite"
+//  url      = env("DATABASE_URL")
+//}
+
+// För produktion på Strato - kommentera ut ovanstående och använd nedanstående
+ datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+   }
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  favorites     Favorite[]
+  slotRatings   SlotRating[]
+  passwordReset PasswordReset?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Forum relations
+  threads       Thread[]
+  posts         Post[]
+  likes         Like[]
+  reports       Report[]
+  resolvedReports Report[] @relation("ResolvedReports")
+  reputation    Int       @default(0)
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PasswordReset {
+  id      String   @id @default(cuid())
+  userId  String   @unique
+  token   String   @unique
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  casinoId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  casino    Casino   @relation(fields: [casinoId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, casinoId])
+}
+
+model Casino {
+  id          String     @id @default(cuid())
+  name        String
+  logo        String?
+  description String?
+  bonus       String?
+  bonusAmount String?
+  rating      Float?
+  url         String?
+  favorites   Favorite[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model SlotRating {
+  id        String   @id @default(cuid())
+  userId    String
+  slotId    String
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, slotId])
+}
+
+// Forum models
+model ForumCategory {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  slug        String   @unique
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  threads     Thread[]
+}
+
+model Thread {
+  id           String        @id @default(cuid())
+  title        String
+  slug         String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  isSticky     Boolean       @default(false)
+  isLocked     Boolean       @default(false)
+  viewCount    Int           @default(0)
+  author       User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String
+  category     ForumCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId   String
+  posts        Post[]
+  lastPostAt   DateTime      @default(now())
+  lastPostById String?
+  acceptedPostId String?
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  threadId  String
+  likes     Like[]
+  reports   Report[]
+  isEdited  Boolean  @default(false)
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  @@unique([userId, postId])
+}
+
+// Modell för rapporterade inlägg
+model Report {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reason    String
+  status    ReportStatus @default(PENDING)
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  
+  // Om rapporten har hanterats av en moderator
+  resolvedById String?
+  resolvedBy   User?  @relation("ResolvedReports", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolvedAt   DateTime?
+  resolution   String?
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  REJECTED
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
